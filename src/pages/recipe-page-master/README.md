@@ -8,7 +8,7 @@
 
 <div align="center">
   <h3>
-    <a href="https://distracted-ritchie-e5151b.netlify.app/recipe-page-master/recipe-page-master/">
+    <a href="http://devchallenges.cafejs.net/recipe-page-master/recipe-page-master/">
       Demo
     </a>
     <span> | </span>
