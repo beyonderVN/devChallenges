@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useReducer, useState } from "react"
+import React, { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useReducer, useState } from "react"
 import { LayoutContent } from "./LayoutContent"
 import { LayoutMenu } from "./LayoutMenu"
 import { LayoutWrap } from "./LayoutWrap"
@@ -7,11 +7,12 @@ import entities,{nestedEntities} from './source'
 window&&(window.entities=entities)
 window&&(window.nestedEntities=nestedEntities)
  function Home() {
+  const [auth,{merge} ]= useBindState(appSchema.auth)
   return (
     <LayoutWrap>
       <LayoutMenu>
         <div className="h-12 shadow flex space-x-3 px-2 items-center">
-          <div className="font-bold">Channels</div>
+          <div className="hidden md:flex font-bold">Channels</div>
         </div>
         <div className="flex-1 overflow-auto ">
           <div className="h-full flex flex-col">
@@ -27,7 +28,15 @@ window&&(window.nestedEntities=nestedEntities)
             }
           </div>
         </div>
-        <div className="h-12 bg"></div>
+        {auth&&<div className="h-12 bg flex items-center px-2">
+        <div className="font-bold ">
+            <div
+              className="btn flex-shrink-0 z-10 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center"
+            >
+              {auth}
+            </div>
+            <div className="hidden md:flex"></div>
+          </div></div>}
       </LayoutMenu>
       <LayoutContent>
         <div className="h-12 shadow"></div>
@@ -71,8 +80,8 @@ function reducer(state, {type,payload}) {
   }
  
 }
-const useStore = ()=>{
-  const [state, dispatch]= useReducer(reducer,nestedEntities)
+const useStore = (initialState)=>{
+  const [state, dispatch]= useReducer(reducer,initialState)
   const merge = useCallback((key,value)=>dispatch({
     type:'merge',
     payload:{
@@ -81,23 +90,65 @@ const useStore = ()=>{
   }),[])
   return {state,merge,}
 }
-const appSchema ={
-  viewCount:'app.viewCount.{{channelId}}'
+const useBindState = (key)=>{
+  const {store} = useContext(ProviderContext)
+  return [
+    store.state[key],
+    {
+      merge:value=>store.merge(key,value)
+    }
+  ]
 }
-export default ()=>{
-  const channelId = useHash()
-  const store= useStore()
-  const {state,merge} =store 
+const appSchema ={
+  viewCount:'app.viewCount.{{channelId}}',
+  auth:'app.auth',
+  currentChannel:'app.currentChannel',
+}
+const ProviderContext = createContext({})
+
+const Provider = ({auth,children})=>{
+  const store= useStore({
+    ...nestedEntities,
+    [appSchema.auth]:auth
+  })
+  
+  
   window&&(window.store=store)
+  
+
+  return <ProviderContext.Provider value={{store}}>
+    {children}
+  </ProviderContext.Provider>
+}
+const Routes = ()=>{
+  const channelId = useHash()
+  const viewCountKey = appSchema.viewCount.replace('{{channelId}}',channelId)
+  const [viewCount,{merge} ]= useBindState(viewCountKey)
   useEffect(()=>{
-    channelId&&(()=>{
-      const viewCountKey = appSchema.viewCount.replace('{{channelId}}',channelId)
-      viewCountKey&&(merge(viewCountKey,((state[viewCountKey]||0)+1)))
-    })()
-    
-  },[merge,channelId])
+    merge((viewCount||0)+1)
+  },[channelId])
   if(channelId){
     return <Channel channelId={channelId}/>
   }
-  return <Home />
+  return <Home /> 
+}
+export default ()=>{
+  const [auth,setAuth] = useState()
+  if(!Boolean(auth)){
+    return <div  className="bg-gray-900 py-6 w-screen space-y-6 h-screen overflow-auto w-full flex flex-wrap justify-center items-center">
+      <div className="font-bold text-xl text-gray-100">Login</div>
+      <div className="max-w-md flex flex-wrap justify-center items-center ">
+        {
+          Object.keys(entities.users).map(key=>{
+            return  <div id={key} onClick={()=>setAuth(key)} className="btn m-2 flex-shrink-0 z-10 w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
+                      {key}
+            </div>
+          })
+        }
+      </div>
+    </div>
+  }
+  return <Provider auth={auth}>
+    <Routes/>
+  </Provider>
 }
