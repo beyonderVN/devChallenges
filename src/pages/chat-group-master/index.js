@@ -1,9 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from "react"
+import React, { useCallback, useEffect, useLayoutEffect, useReducer, useState } from "react"
 import { LayoutContent } from "./LayoutContent"
 import { LayoutMenu } from "./LayoutMenu"
 import { LayoutWrap } from "./LayoutWrap"
 import Channel from './Channel'
-import entities from './source'
+import entities,{nestedEntities} from './source'
+window&&(window.entities=entities)
+window&&(window.nestedEntities=nestedEntities)
  function Home() {
   return (
     <LayoutWrap>
@@ -57,8 +59,43 @@ const useHash = ()=>{
   },[])
   return channelId
 }
+function reducer(state, {type,payload}) {
+  switch (type) {
+    case 'merge':
+      return {...state,
+        ...payload
+        };
+        
+    default:
+      throw new Error();
+  }
+ 
+}
+const useStore = ()=>{
+  const [state, dispatch]= useReducer(reducer,nestedEntities)
+  const merge = useCallback((key,value)=>dispatch({
+    type:'merge',
+    payload:{
+      [key]:value
+    }
+  }),[])
+  return {state,merge,}
+}
+const appSchema ={
+  viewCount:'app.viewCount.{{channelId}}'
+}
 export default ()=>{
   const channelId = useHash()
+  const store= useStore()
+  const {state,merge} =store 
+  window&&(window.store=store)
+  useEffect(()=>{
+    channelId&&(()=>{
+      const viewCountKey = appSchema.viewCount.replace('{{channelId}}',channelId)
+      viewCountKey&&(merge(viewCountKey,((state[viewCountKey]||0)+1)))
+    })()
+    
+  },[merge,channelId])
   if(channelId){
     return <Channel channelId={channelId}/>
   }
