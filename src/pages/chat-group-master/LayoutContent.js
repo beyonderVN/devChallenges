@@ -1,5 +1,5 @@
-import React from "react";
+import React from "react"
 
 export const LayoutContent = props => (
-  <div className="flex-1 flex flex-col bg-2" {...props} />
-);
+  <div className="flex-1 flex flex-col bg-2 overflow-auto" {...props} />
+)
