@@ -13,5 +13,15 @@ export const useStore = (initialState, middleware) => {
       }),
     []
   )
-  return { state, merge }
+  const mergeAll = useCallback(
+    obj =>
+      middleware(dispatch)({
+        type: "merge",
+        payload: obj,
+      }),
+    []
+  )
+  window.state = state
+
+  return { state, merge, mergeAll }
 }

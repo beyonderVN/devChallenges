@@ -7,9 +7,16 @@ import entities from "./source"
 import { useBindState } from "./useBindState"
 
 export const ChatBox = ({ channelId, isMember }) => {
-  const [messages = [], { merge: setmessages }] = useBindState(
-    appSchema.messages.replace("{{channelId}}", channelId)
+  const [messageLength = 0] = useBindState(
+    appSchema.messages_length.replace("{{channelId}}", channelId)
   )
+  const ids = new Array(Number(messageLength)).fill(null).map((_, index) => {
+    return appSchema.messages_id
+      .replace("{{channelId}}", channelId)
+      .replace("{{messageId}}", Number(messageLength) - 1 - index)
+  })
+  const [messages = []] = useBindState(ids)
+
   const [auth, { merge: setAuth }] = useBindState(appSchema.auth)
   const handleSendMessage = e => {
     if (e) {
@@ -17,22 +24,33 @@ export const ChatBox = ({ channelId, isMember }) => {
     }
     const node = document.querySelector("#input")
     if (node && node.value && node.value.length) {
-      setmessages((messages = []) => [
-        {
-          created: Date.now(),
-          user: auth,
-          message: node.value,
-        },
-        ...messages,
-      ])
+      localStorage.setItem(
+        "action",
+        JSON.stringify({
+          type: "new_message",
+          payload: {
+            channelId,
+            user: auth,
+            message: node.value,
+          },
+        })
+      )
+      // setmessages((messages = []) => [
+      //   {
+      //     created: Date.now(),
+      //     user: auth,
+      //     message: node.value,
+      //   },
+      //   ...messages,
+      // ])
       node.value = ""
     }
   }
-  const lastMessageId = messages.length && messages[0].created
+  const lastMessageId =
+    messages && messages.length && messages[0] && messages[0].created
   useEffect(() => {
     if (lastMessageId) {
       const e = document.querySelector("#messageId_" + lastMessageId)
-      e && console.log(e)
       e.scrollIntoView()
     }
   }, [lastMessageId])
@@ -46,7 +64,7 @@ export const ChatBox = ({ channelId, isMember }) => {
       <div className="flex-1 overflow-auto ">
         <div className="flex flex-col flex-col-reverse p-1 space-y-reverse space-y-3 justify-end min-h-full px-2">
           <div />
-          {messages.map(({ created, user, message }, index) => (
+          {messages.filter(Boolean).map(({ created, user, message }, index) => (
             <div
               id={"messageId_" + created}
               key={created}
@@ -130,7 +148,7 @@ export default function Channel({ channelId }) {
               <svg
                 stroke="currentColor"
                 fill="currentColor"
-                stroke-width="0"
+                strokeWidth="0"
                 viewBox="0 0 1024 1024"
                 height="1em"
                 width="1em"

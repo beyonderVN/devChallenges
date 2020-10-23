@@ -3,6 +3,8 @@ export const appSchema = {
   auth: "app.auth",
   currentChannel: "app.currentChannel",
   messages: "channels.{{channelId}}.messages",
+  messages_length: "channels.{{channelId}}.messages.length",
+  messages_all: "channels.{{channelId}}.messages.all",
   messages_id: "channels.{{channelId}}.messages.{{messageId}}",
   members: "channels.{{channelId}}.members",
   isMember: "channels.{{channelId}}.members.{{userId}}.isMember",

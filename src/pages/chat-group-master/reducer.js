@@ -4,6 +4,6 @@ export function reducer(state, { type, payload }) {
       return { ...state, ...payload }
 
     default:
-      throw new Error()
+      throw new Error("undefide action type")
   }
 }
