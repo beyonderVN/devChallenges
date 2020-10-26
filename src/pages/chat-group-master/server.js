@@ -21,6 +21,7 @@ function getdata() {
 }
 export default () => {
   const dataRef = useRef()
+  const connectionsRef = useRef({})
   const [update, setUpdate] = useState()
   const actionsRef = useRef([])
 
@@ -31,8 +32,10 @@ export default () => {
     const event = function (event) {
       if (event.storageArea === localStorage) {
         const action = localStorage.getItem("action")
+        console.log(action)
         if (action) {
           const parsedAction = JSON.parse(action)
+          let payload
           actionsRef.current.unshift(parsedAction)
           switch (parsedAction.type) {
             case "new_message":
@@ -57,7 +60,7 @@ export default () => {
                 message,
               }
 
-              const payload = {
+              payload = {
                 [messagesLengthKey]: newmessagesLength,
                 [messageskey]: newMess,
               }
@@ -68,20 +71,23 @@ export default () => {
                   payload: payload,
                 })
               )
-
+              break
+            case "connect":
+              const { connecteId } = parsedAction.payload
+              connectionsRef.current[connecteId] = true
+              localStorage.setItem(connecteId, true)
+              break
             default:
-              dataRef.current = {
-                ...dataRef.current,
-                ...parsedAction.payload,
-                ...payload,
-              }
-              localStorage.setItem(
-                "server_data",
-                JSON.stringify(dataRef.current)
-              )
               break
           }
+          dataRef.current = {
+            ...dataRef.current,
+            ...parsedAction.payload,
+            ...payload,
+          }
+          localStorage.setItem("server_data", JSON.stringify(dataRef.current))
         }
+
         localStorage.removeItem("action")
         setUpdate(Date.now())
       }
@@ -93,6 +99,7 @@ export default () => {
   }, [])
   return (
     <div className="w-screen h-screen whitespace-pre-wrap overflow-auto">
+      <div>{Object.keys(connectionsRef.current)}</div>
       {JSON.stringify(actionsRef.current, null, 2)}
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react"
+import React, { useLayoutEffect, useState } from "react"
 import { ProviderContext } from "./ProviderContext"
 import { useStore } from "./useStore"
 
@@ -25,6 +25,7 @@ export function emit(next) {
 }
 const compose = (...fns) => x => fns.reduce((v, f) => f(v), x)
 export const Provider = ({ children }) => {
+  const [connecteId] = useState(Date.now())
   const store = useStore(data, compose(logger, emit))
   useLayoutEffect(() => {
     const event = function (event) {
@@ -52,7 +53,17 @@ export const Provider = ({ children }) => {
     window.store = store
     localStorage.setItem("data", JSON.stringify(store.state))
   }, [store])
-
+  useLayoutEffect(() => {
+    localStorage.setItem(
+      "action",
+      JSON.stringify({
+        type: "connect",
+        payload: {
+          connecteId,
+        },
+      })
+    )
+  }, [])
   return (
     <ProviderContext.Provider value={{ store }}>
       {children}

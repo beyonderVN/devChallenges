@@ -30,7 +30,7 @@ export function Home() {
                 tabIndex="0"
                 className="btn flex items-center target:bg-gray-300 p-2 border-l border-transparent"
               >
-                <div className="z-10 w-10 h-10 rounded-xl bg-gray-800 flex items-center justify-center">
+                <div className="z-10 w-10 h-10 rounded-xl bg-gray-800 flex items-center justify-center flex-shrink-0">
                   {channelId}
                 </div>
                 <div className="truncate flex-1" />

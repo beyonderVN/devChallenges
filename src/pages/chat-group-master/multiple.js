@@ -5,6 +5,17 @@ export default function multiple() {
       <iframe
         width="100%"
         height="100%"
+        className="col-span-1 lg:col-span-2"
+        frameBorder={0}
+        title="map"
+        marginHeight={0}
+        marginWidth={0}
+        scrolling="no"
+        src="http://localhost:8000/chat-group-master/server"
+      />
+      <iframe
+        width="100%"
+        height="100%"
         className="col-span-1 "
         frameBorder={0}
         title="map"
@@ -22,7 +33,7 @@ export default function multiple() {
         marginHeight={0}
         marginWidth={0}
         scrolling="no"
-        src="http://localhost:8000/chat-group-master/server"
+        src="http://localhost:8000/chat-group-master"
       />
     </div>
   )
