@@ -26,7 +26,7 @@ export function emit(next) {
 const compose = (...fns) => x => fns.reduce((v, f) => f(v), x)
 export const Provider = ({ children }) => {
   const [connecteId] = useState(Date.now())
-  const store = useStore(data, compose(logger, emit))
+  const store = useStore({}, compose(logger, emit))
   useLayoutEffect(() => {
     const event = function (event) {
       if (event.storageArea === localStorage) {
@@ -51,7 +51,7 @@ export const Provider = ({ children }) => {
   }, [store])
   useLayoutEffect(() => {
     window.store = store
-    localStorage.setItem("data", JSON.stringify(store.state))
+    // localStorage.setItem("data", JSON.stringify(store.state))
   }, [store])
   useLayoutEffect(() => {
     localStorage.setItem(

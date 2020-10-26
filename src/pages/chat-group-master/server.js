@@ -75,7 +75,10 @@ export default () => {
             case "connect":
               const { connecteId } = parsedAction.payload
               connectionsRef.current[connecteId] = true
-              localStorage.setItem(connecteId, true)
+              localStorage.setItem(
+                "connections",
+                JSON.stringify(connectionsRef.current)
+              )
               break
             default:
               break
