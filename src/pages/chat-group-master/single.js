@@ -1,10 +1,11 @@
 import React, { useEffect, useLayoutEffect, useMemo } from "react"
-import entities, { nestedEntities } from "./source"
-import { ProviderContext } from "./ProviderContext"
-import { Routes } from "./Routes"
-import { useStore } from "./useStore"
-window && (window.entities = entities)
-window && (window.nestedEntities = nestedEntities)
+import entities, {
+  nestedEntities,
+} from "../../projects/chat-group-master/source"
+import { Routes } from "../../projects/chat-group-master/Routes"
+import { useStore } from "../../projects/chat-group-master/useStore"
+import { ProviderContext } from "../../projects/chat-group-master/ProviderContext"
+
 function getdata() {
   let result = nestedEntities
   try {

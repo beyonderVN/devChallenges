@@ -1,5 +1,5 @@
 import React from "react"
-import { appSchema } from "./appSchema"
+import appSchema from "./appSchema"
 import entities from "./source"
 import { useBindState } from "./useBindState"
 

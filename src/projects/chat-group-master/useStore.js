@@ -21,7 +21,6 @@ export const useStore = (initialState, middleware) => {
       }),
     []
   )
-  window.state = state
 
   return { state, merge, mergeAll }
 }

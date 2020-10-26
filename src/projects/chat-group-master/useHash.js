@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export const useHash = () => {
-  const [channelId, setChannelId] = useState(decodeURI(document.location.hash))
+  const [channelId, setChannelId] = useState()
   useEffect(() => {
     window &&
       (window.onpopstate = function (event) {

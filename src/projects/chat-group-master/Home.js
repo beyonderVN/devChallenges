@@ -4,8 +4,8 @@ import { LayoutMenu } from "./LayoutMenu"
 import { LayoutWrap } from "./LayoutWrap"
 import entities from "./source"
 import { useBindState } from "./useBindState"
-import { appSchema } from "./appSchema"
-import { ChatBox } from "./channel"
+import appSchema from "./appSchema"
+import { ChatBox } from "./Channel"
 
 export function Home() {
   const [auth, { merge }] = useBindState(appSchema.auth)

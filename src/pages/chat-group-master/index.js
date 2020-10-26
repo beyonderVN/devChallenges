@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useMemo } from "react"
-
-import { Routes } from "./Routes"
-import { Provider } from "./Provider"
+import { Provider } from "../../projects/chat-group-master/Provider"
+import { Routes } from "../../projects/chat-group-master/Routes"
 
 export default () => {
   return (

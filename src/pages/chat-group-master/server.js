@@ -5,30 +5,29 @@ import React, {
   useRef,
   useState,
 } from "react"
-import { Routes } from "./Routes"
-import { Provider } from "./Provider"
-import entities, { nestedEntities } from "./source"
-import { appSchema } from "./appSchema"
-window && (window.entities = entities)
-window && (window.nestedEntities = nestedEntities)
-localStorage.removeItem("action")
+
+import entities, {
+  nestedEntities,
+} from "../../projects/chat-group-master/source"
+import appSchema from "../../projects/chat-group-master/appSchema"
 function getdata() {
-  let result = nestedEntities
+  let result = {}
   try {
-    result =
-      JSON.parse(localStorage.getItem("server_data") || "{}") || nestedEntities
+    result = JSON.parse(localStorage.getItem("data") || "{}")
   } catch (error) {
-    result = nestedEntities
+    result = {}
   }
   return result
 }
-export const data = getdata()
 export default () => {
-  const dataRef = useRef(data || nestedEntities)
-  const [update, setUpdate] = useState(data || nestedEntities)
+  const dataRef = useRef()
+  const [update, setUpdate] = useState()
   const actionsRef = useRef([])
 
   useLayoutEffect(() => {
+    const data = getdata()
+    dataRef.current = data || nestedEntities
+    localStorage.removeItem("action")
     const event = function (event) {
       if (event.storageArea === localStorage) {
         const action = localStorage.getItem("action")

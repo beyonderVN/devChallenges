@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { appSchema } from "./appSchema"
+import appSchema from "./appSchema"
 import { LayoutContent } from "./LayoutContent"
 import { LayoutMenu } from "./LayoutMenu"
 import { LayoutWrap } from "./LayoutWrap"
