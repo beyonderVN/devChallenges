@@ -19,6 +19,7 @@ const nestingEntities = (result, entities, key) => {
 const catSvg = (
   <svg
     className="inline"
+    fill="currentColor"
     width="1em"
     height="1em"
     xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@ export default function Home({ data }) {
   return (
     <div
       style={{
-        color: "#291507",
+        color: "#4D270C",
       }}
       className="w-full flex container mx-auto flex-wrap overflow-x-auto px-4 flex flex-col"
     >
@@ -63,55 +64,184 @@ export default function Home({ data }) {
         style={{
           fontFamily: "Mystery Quest",
         }}
-        className="py-3 text-xl w-full"
+        className="py-3 text-2xl w-full"
       >
         CatWiki <span className="text-4xl leading-none">{catSvg}</span>
       </header>
-      <main className="space-y-6 w-full flex flex-col">
-        <div
+      <main className="space-y-12 lg:space-y-24 w-full flex flex-col">
+        <section
           style={{ background: "#E3E1DC" }}
-          className="rounded-3xl overflow-hidden flex items-start"
+          className="rounded-3xl overflow-hidden"
         >
           <div
             style={{ background: "#050709" }}
-            className="px-6 py-4 space-y-4 text-white flex-1  w-1/2"
+            className="grid grid-cols-2  overflow-hidden"
           >
-            <div className="space-y-2">
-              <h1
-                style={{
-                  fontFamily: "Mystery Quest",
-                }}
-              >
-                CatWiki
-              </h1>
-              <h2 className="text-sm">Get to know more about your cat breed</h2>
-            </div>
-            <div className="flex justify-start mt-6">
-              <div className="relative overflow-hidden shadow-inner flex items-center justify-start bg-white text-gray-700 rounded-2xl">
-                <div className="relative h-10 flex items-center">
-                  <div className="pl-3 lg:hidden opacity-50">Search</div>
-                  <div className="pl-3 hidden lg:block opacity-50">
-                    Enter your breed
+            <div
+              style={{ paddingTop: "20%", paddingBottom: "20%" }}
+              className="px-6 md:px-12 lg:px-24 col-span-1 w-full pb-6 h-full space-y-4 text-white flex-1"
+            >
+              <div className="space-y-2">
+                <h1
+                  className="text-xl md:text-4xl lg:text-6xl"
+                  style={{
+                    fontFamily: "Mystery Quest",
+                  }}
+                >
+                  CatWiki
+                </h1>
+                <h2 className="text-sm lg:text-base">
+                  Get to know more about your cat breed
+                </h2>
+              </div>
+              <div className="flex justify-start mt-6">
+                <div className="relative overflow-hidden shadow-inner max-w-sm flex items-center justify-start md:w-full bg-white text-gray-700 rounded-2xl">
+                  <div className="relative h-10 flex-1 items-center">
+                    <div className="pl-3 md:hidden opacity-50 leading-10">
+                      Search
+                    </div>
+                    <div className="pl-3 hidden md:block opacity-50 leading-10">
+                      Enter your breed
+                    </div>
+                    <input className="absolute left-0 top-0 w-full leading-10 hover:opacity-100 opacity-0 bg-white h-full pl-3 focus:outline-none"></input>
                   </div>
-                  <input className="absolute left-0 top-0 w-full hover:opacity-100 opacity-0 bg-white h-full pl-3 focus:outline-none"></input>
-                </div>
-                <div className="w-10 h-10 flex justify-center items-center">
-                  {searchSvg}
+                  <div className="w-10 h-10 flex justify-center items-center">
+                    {searchSvg}
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="h-full col-span-1 flex-1 flex-shrink-0  h-full relative overflow-hidden ">
+              <div
+                style={{
+                  paddingTop: "100%",
+                }}
+              />
+              <div
+                className="absolute w-full h-full left-0 top-0 bg-cover transform scale-150"
+                style={{
+                  backgroundPositionY: "30%",
+                  backgroundImage: `url("https://s3-alpha-sig.figma.com/img/26d2/a232/4c7c4af04c6f8215244645b0d95c06e4?Expires=1605484800&Signature=bSKNafDrGdx2CH97EFrk2WZeuRyQ7ElAavlrj7X9katzyCBpRSQDORFI1UAkp3pICVZc6TEvjtFIlMW-T0Aeg~M6wzwuuRn10sXGP~cgUwkm9J5cakZl-euUAlEzNrboHcVfKLZe78912lxGBHnyX15RY1HNmL7ZDXXaNvJtorSv0mxRoJmEbu9EftZbKY7VktBypjBkSVDvmC3dy~KLJI0-8wXA1e-3tn8UsufgfapJO4cinE3BwSK9x-0f4-uAZPlHm0Ut-vypemJPNra5h-R~BvgHRjxVON09PXYJc814qUOJclKSjQIchos27RkXEltT2~KFY4gIeD3t9b3JAw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA")`,
+                }}
+              ></div>
+            </div>
           </div>
-          <div
-            style={{
-              backgroundImage: `url("https://s3-alpha-sig.figma.com/img/26d2/a232/4c7c4af04c6f8215244645b0d95c06e4?Expires=1605484800&Signature=bSKNafDrGdx2CH97EFrk2WZeuRyQ7ElAavlrj7X9katzyCBpRSQDORFI1UAkp3pICVZc6TEvjtFIlMW-T0Aeg~M6wzwuuRn10sXGP~cgUwkm9J5cakZl-euUAlEzNrboHcVfKLZe78912lxGBHnyX15RY1HNmL7ZDXXaNvJtorSv0mxRoJmEbu9EftZbKY7VktBypjBkSVDvmC3dy~KLJI0-8wXA1e-3tn8UsufgfapJO4cinE3BwSK9x-0f4-uAZPlHm0Ut-vypemJPNra5h-R~BvgHRjxVON09PXYJc814qUOJclKSjQIchos27RkXEltT2~KFY4gIeD3t9b3JAw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA")`,
-            }}
-            className="px-6 py-4 flex-1 flex-shrink-0 w-1/2 h-full relative transform scale-150"
-          >
-            <div style={{ paddingTop: "100%" }}></div>
+          <div className="px-6 md:px-12 lg:px-24 md:pb-12 lg:pb-24 pt-4 md:pt-8 lg:pt-12 pb-6 space-y-6 font-semibold text-sm">
+            <div className="inline-block  md:text-lg lg:text-xl">
+              Most Searched Breeds
+              <div
+                style={{
+                  height: "2px",
+                  background: "#4D270C",
+                  width: "30%",
+                  minWidth: "20px",
+                }}
+              ></div>
+            </div>
+            <div className="max-w-sm text-3xl font-bold leading-tight">
+              66+ Breeds For you to discover
+            </div>
+            <div className="grid grid-cols-2 gap-3 md:gap-6 lg:gap-12">
+              {new Array(4).fill(
+                <div className="col-span-1">
+                  <div
+                    className="relative"
+                    style={{
+                      paddingTop: "100%",
+                    }}
+                  >
+                    <img
+                      className="w-full h-full absolute left-0 top-0 rounded-xl object-cover"
+                      src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </section>
+        <section className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-6 md:px-12 lg:px-24">
+          <div className="space-y-6 col-span-1">
+            <div className="inline-block space-y-3">
+              <div
+                style={{
+                  height: "2px",
+                  background: "#4D270C",
+                  width: "30%",
+                  minWidth: "20px",
+                }}
+              ></div>
+              <h2 className="text-5xl font-bold leading-tight">
+                Why should you have a cat?
+              </h2>
+            </div>
+            <div className="text-lg font-semibold">
+              Having a cat around you can actually trigger the release of
+              calming chemicals in your body which lower your stress and anxiety
+              leves
+            </div>
+            <div>
+              <button className="inline-flex items-center space-x-3">
+                <span className="font-semibold text">READ MORE</span>
+                <span>
+                  <svg
+                    stroke="c
+urrentColor"
+                    fill="none"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M23.0677 11.9929L18.818 7.75739L17.4061 9.17398L19.2415 11.0032L0.932469 11.0012L0.932251 13.0012L19.2369 13.0032L17.4155 14.8308L18.8321 16.2426L23.0677 11.9929Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div className="col-span-1 relative">
+            <div style={{ width: "100%", paddingTop: "100%" }}></div>
+            <div className="absolute top-0 left-0 w-full h-full grid  grid-rows-5 grid-cols-11 grid-flow-col gap-4">
+              <div className="col-start-1 col-end-7 row-start-1 row-end-3 rounded-xl object-cover bg-gray-100">
+                <img
+                  className="object-cover w-full h-full rounded-2xl"
+                  src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                ></img>
+              </div>
+              <div className="col-start-7 col-end-12 row-start-1 row-end-5 rounded-xl object-cover bg-gray-100">
+                <img
+                  className="object-cover w-full h-full rounded-2xl"
+                  src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                ></img>
+              </div>
+              <div className="col-start-2  col-end-7 row-start-3 row-end-6 rounded-xl object-cover bg-gray-100">
+                <img
+                  className="object-cover w-full h-full rounded-2xl"
+                  src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                ></img>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div />
       </main>
-      <footer></footer>
+      <footer className="px-6 text-white md:px-12 lg:px-24 space-y-3 md:space-y-6 lg:space-y-12 pb-3 md:pb-6 lg:pb-12 flex items-center flex-wrap rounded-t-3xl  bg-black">
+        <div></div>
+        <div
+          style={{
+            fontFamily: "Mystery Quest",
+          }}
+          className="text-xl  overflow-hidden whitespace-no-wrap"
+        >
+          CatWiki <span className="text-3xl leading-none">{catSvg}</span>
+        </div>
+        <div className="flex-1" />
+        <div>© cafejs - devchallenge.io 2020</div>
+      </footer>
     </div>
   )
 }
