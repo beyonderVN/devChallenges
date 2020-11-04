@@ -1,7 +1,5 @@
-import Head from "next/head"
-import { Fragment, useLayoutEffect } from "react"
-import { useEffect, useMemo, useRef } from "react"
-import { useState } from "react"
+import { saveImageToDisk } from "../utils"
+
 const nestingEntities = (result, entities, key) => {
   if (typeof entities === typeof "") {
     return {
@@ -52,9 +50,10 @@ const searchSvg = (
   </svg>
 )
 
-export default function Home({ data }) {
+export default function Home({}) {
   return (
     <div
+      id="capture"
       style={{
         color: "#4D270C",
       }}
@@ -246,7 +245,12 @@ urrentColor"
   )
 }
 export async function getStaticProps() {
+  await saveImageToDisk(
+    "https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
+    "./public/static/images/banner.png"
+  )
   const res = await fetch("https://api.thecatapi.com/v1/breeds")
+
   const data = await res.json()
   return {
     props: {
