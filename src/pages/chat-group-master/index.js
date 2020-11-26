@@ -11,7 +11,7 @@ export default function multiple({ location }) {
         marginHeight={0}
         marginWidth={0}
         scrolling="no"
-        src={`${location.origin}/chat-group-master/server`}
+        src={`/chat-group-master/server`}
       />
       <iframe
         width="100%"
@@ -22,7 +22,7 @@ export default function multiple({ location }) {
         marginHeight={0}
         marginWidth={0}
         scrolling="no"
-        src={`${location.origin}/chat-group-master/single`}
+        src={`/chat-group-master/single`}
       />
       <iframe
         width="100%"
@@ -33,7 +33,7 @@ export default function multiple({ location }) {
         marginHeight={0}
         marginWidth={0}
         scrolling="no"
-        src={`${location.origin}/chat-group-master/single`}
+        src={`/chat-group-master/single`}
       />
     </div>
   )
