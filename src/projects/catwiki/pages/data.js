@@ -2,7 +2,6 @@ import Head from "next/head"
 import { Fragment, useLayoutEffect } from "react"
 import { useEffect, useMemo, useRef } from "react"
 import { useState } from "react"
-import { craw } from "../utils/craw"
 const nestingEntities = (result, entities, key) => {
   if (typeof entities === typeof "") {
     return {
@@ -222,7 +221,7 @@ export default function Data({ data }) {
 export async function getStaticProps() {
   const res = await fetch("https://api.thecatapi.com/v1/breeds")
   const data = await res.json()
-  craw()
+  // craw()
   return {
     props: {
       data,

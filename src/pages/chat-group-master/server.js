@@ -46,7 +46,7 @@ export default () => {
               )
               const newmessagesLength =
                 (dataRef.current[messagesLengthKey] || 0) + 1
-
+              const created = new Date()
               const messId = newmessagesLength - 1
               const messageskey = appSchema.messages_id
                 .replace("{{channelId}}", channelId)
@@ -55,7 +55,7 @@ export default () => {
               const newMess = {
                 id: messId,
                 channelId,
-                created: Date.now(),
+                created: created.getTime(),
                 user,
                 message,
               }

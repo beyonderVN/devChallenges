@@ -1,5 +1,3 @@
-import { saveImageToDisk } from "../utils"
-
 const nestingEntities = (result, entities, key) => {
   if (typeof entities === typeof "") {
     return {
@@ -49,8 +47,16 @@ const searchSvg = (
     <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
   </svg>
 )
+const randomArrayInRange = (min, max, n) =>
+  Array.from(
+    { length: n },
+    () => Math.floor(Math.random() * (max - min + 1)) + min
+  )
 
-export default function Home({}) {
+const getImageUrl = breed => `/static/images/${breed}.png`
+export default function Home({ data }) {
+  const randomIndex = randomArrayInRange(0, data.length, 10)
+  let count = 0
   return (
     <div
       id="capture"
@@ -120,7 +126,7 @@ export default function Home({}) {
                 className="absolute w-full h-full left-0 top-0 bg-cover transform scale-150"
                 style={{
                   backgroundPositionY: "30%",
-                  backgroundImage: `url("https://s3-alpha-sig.figma.com/img/26d2/a232/4c7c4af04c6f8215244645b0d95c06e4?Expires=1605484800&Signature=bSKNafDrGdx2CH97EFrk2WZeuRyQ7ElAavlrj7X9katzyCBpRSQDORFI1UAkp3pICVZc6TEvjtFIlMW-T0Aeg~M6wzwuuRn10sXGP~cgUwkm9J5cakZl-euUAlEzNrboHcVfKLZe78912lxGBHnyX15RY1HNmL7ZDXXaNvJtorSv0mxRoJmEbu9EftZbKY7VktBypjBkSVDvmC3dy~KLJI0-8wXA1e-3tn8UsufgfapJO4cinE3BwSK9x-0f4-uAZPlHm0Ut-vypemJPNra5h-R~BvgHRjxVON09PXYJc814qUOJclKSjQIchos27RkXEltT2~KFY4gIeD3t9b3JAw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA")`,
+                  backgroundImage: `url("/banner.png")`,
                 }}
               ></div>
             </div>
@@ -141,21 +147,26 @@ export default function Home({}) {
               66+ Breeds For you to discover
             </div>
             <div className="grid grid-cols-2 gap-3 md:gap-6 lg:gap-12">
-              {new Array(4).fill(
-                <div className="col-span-1">
-                  <div
-                    className="relative"
-                    style={{
-                      paddingTop: "100%",
-                    }}
-                  >
-                    <img
-                      className="w-full h-full absolute left-0 top-0 rounded-xl object-cover"
-                      src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-                    />
+              {new Array(4)
+                .fill(() => (
+                  <div className="col-span-1 space-y-1">
+                    <div
+                      className="relative"
+                      style={{
+                        paddingTop: "100%",
+                      }}
+                    >
+                      <img
+                        className="w-full h-full absolute left-0 top-0 rounded-xl object-cover"
+                        src={getImageUrl(data[randomIndex[count++]].id)}
+                      />
+                    </div>
+                    <div className="font-bold">
+                      {data[randomIndex[count]].name}
+                    </div>
                   </div>
-                </div>
-              )}
+                ))
+                .map(item => item())}
             </div>
           </div>
         </section>
@@ -208,19 +219,19 @@ urrentColor"
               <div className="col-start-1 col-end-7 row-start-1 row-end-3 rounded-xl object-cover bg-gray-100">
                 <img
                   className="object-cover w-full h-full rounded-2xl"
-                  src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                  src={getImageUrl(data[randomIndex[count++]].id)}
                 ></img>
               </div>
               <div className="col-start-7 col-end-12 row-start-1 row-end-5 rounded-xl object-cover bg-gray-100">
                 <img
                   className="object-cover w-full h-full rounded-2xl"
-                  src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                  src={getImageUrl(data[randomIndex[count++]].id)}
                 ></img>
               </div>
               <div className="col-start-2  col-end-7 row-start-3 row-end-6 rounded-xl object-cover bg-gray-100">
                 <img
                   className="object-cover w-full h-full rounded-2xl"
-                  src="https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                  src={getImageUrl(data[randomIndex[count++]].id)}
                 ></img>
               </div>
             </div>
@@ -245,12 +256,7 @@ urrentColor"
   )
 }
 export async function getStaticProps() {
-  await saveImageToDisk(
-    "https://s3-alpha-sig.figma.com/img/d98b/e6d2/5adeec61af9e8139176bef6da50ea692?Expires=1605484800&Signature=Gksf6oYUbfwyOM3qyiWUnfBLrux2YrokwIDb98~X6qQzw~ybERdlMD-LIHThiY6sImKIWTttqCQc4AfSW5DeMlEEFPiXSjOgn1GUMaWRHaspD2JkK0StfyI3CbKAGxfV6p8zFE56qbVT0smsalfofZF22TcmK5bC6o8ko5KgyYdCJ6O0nwO47ofdpGk6H7fHjoJZnjZaR-vgMDzU29qb1kT6FUe2JGvnbSyzasHDElQP6VuLYzKZv~d35Fen30Bp1EUJVbRd201maFKjTQDKa1lXuxgciDDEsk4tp-iExLzhrKIk9-eKMOujpG22Fo95UgajqV-MUuG~4c5I52iIwA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
-    "./public/static/images/banner.png"
-  )
   const res = await fetch("https://api.thecatapi.com/v1/breeds")
-
   const data = await res.json()
   return {
     props: {
